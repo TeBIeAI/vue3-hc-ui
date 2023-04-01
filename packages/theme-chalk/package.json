@@ -1,0 +1,7 @@
+{
+  "name": "@hc-ui/theme-chalk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "privite": true,
+  "license": "ISC"
+}

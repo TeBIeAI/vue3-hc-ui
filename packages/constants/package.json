@@ -1,0 +1,7 @@
+{
+  "name": "@hc-ui/constants",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "privite": true,
+  "license": "ISC"
+}

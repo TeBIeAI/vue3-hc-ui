@@ -1,0 +1,13 @@
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+@use './mixins/config.scss' as *;
+
+.#{$namespace}-overlay-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  background-color: var(--hc-overlay-color-lighter);
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@hc-ui/components",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "module": "index.ts",
+  "privite": true,
+  "license": "ISC"
+}

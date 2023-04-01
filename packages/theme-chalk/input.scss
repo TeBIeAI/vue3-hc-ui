@@ -1,0 +1,156 @@
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+@use './mixins/config.scss' as *;
+
+@include b(input) {
+  position: relative;
+  font-size: var(--hc-font-size-base);
+  display: inline-flex;
+  width: 100%;
+  line-height: var(--hc-component-size);
+  box-sizing: border-box;
+  vertical-align: middle;
+
+  & .#{$namespace}-icon,
+  & .#{$namespace}-input__clear,
+  & .#{$namespace}-input__pwd {
+    cursor: pointer;
+  }
+
+  @include e(wrapper) {
+    display: inline-flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 11px;
+    background-color: var(--hc-foll-color-blank);
+    background-image: none;
+    border-radius: var(--hc-border-radius-base);
+    transition: var(--hc-transition-box-shadow);
+    transform: translateZ(0);
+    box-shadow: 0 0 0 1px var(--hc-input-border-color, var(--hc-border-color))
+      inset;
+
+    &:hover {
+      box-shadow: 0 0 0 1px
+        var(--hc-color-primary-light-3, var(--hc-border-color)) inset;
+    }
+  }
+
+  @include e(inner) {
+    --hc-input-inner-height: calc(var(--hc-component-size, 32px) - 2px);
+    width: 100%;
+    flex-grow: 1;
+    -webkit-appearance: none;
+    color: var(--hc-text-color-regular, var(--el-text-color-regular));
+    font-size: inherit;
+    height: var(--hc-input-inner-height);
+    line-height: var(--hc-input-inner-height);
+    padding: 0;
+    outline: none;
+    border: none;
+    background: none;
+    box-sizing: border-box;
+  }
+
+  @each $slot in (suffix, prefix) {
+    @include e($slot) {
+      display: inline-flex;
+      white-space: nowrap;
+      flex-shrink: 0;
+      flex-wrap: nowrap;
+      height: 100%;
+      text-align: center;
+      color: var(--hc-text-color-regular);
+      transition: 0.2s;
+      pointer-events: none;
+    }
+
+    @include e(#{$slot}-inner) {
+      pointer-events: all;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  @include when(disabled) {
+    cursor: not-allowed;
+
+    .#{$namespace}-input__wrapper {
+      background-color: var(--hc-disabled-border-color);
+      box-shadow: 0 0 0 1px var(--hc-color-info-light-3, var(--hc-border-color))
+        inset;
+    }
+
+    .#{$namespace}-input__inner {
+      cursor: not-allowed;
+    }
+  }
+}
+
+@include b(input-group) {
+  display: inline-flex;
+  width: 100%;
+  align-items: stretch;
+
+  @each $slot in (append, prepend) {
+    @include e($slot) {
+      background-color: var(--hc-fill-color-light);
+      color: var(--hc-text-color-regular);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+      border-radius: var(--hc-border-radius-base);
+      padding: 0 20px;
+      white-space: nowrap;
+
+      &:focus {
+        outline: none;
+      }
+
+      .#{$namespace}-select,
+      .#{$namespace}-button {
+        display: inline-block;
+        margin: 0 -20px;
+      }
+
+      button.#{$namespace}-button,
+      button.#{$namespace}-button:hover,
+      div.#{$namespace}-select .#{$namespace}-input__wrapper,
+      div.#{$namespace}-select:hover .#{$namespace}-input__wrapper {
+        border-color: transparent;
+        background-color: transparent;
+        color: inherit;
+      }
+
+      .#{$namespace}-button,
+      .#{$namespace}-input {
+        font-size: inherit;
+      }
+    }
+
+    // @include e(#{$slot}-inner) {
+    //   pointer-events: all;
+    //   display: inline-flex;
+    //   align-items: center;
+    //   justify-content: center;
+    // }
+  }
+
+  @include e(prepend) {
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    // @include inset-prepend-border(#{getCssVar('input-border-color')});
+  }
+
+  @include e(append) {
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    // @include inset-append-border(#{getCssVar('input-border-color')});
+  }
+}

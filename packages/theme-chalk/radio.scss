@@ -1,0 +1,80 @@
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+@use './mixins/config.scss' as *;
+
+@include b(radio) {
+  color: var(--hc-text-color-regular);
+  font-weight: 500;
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  outline: none;
+  font-size: var(--hc-font-size-base);
+  user-select: none;
+  margin-right: 32px;
+  height: 32px;
+
+  @include e(input) {
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    display: inline-flex;
+    position: relative;
+    vertical-align: middle;
+  }
+
+  @include e(origin) {
+    opacity: 0;
+    outline: none;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+  }
+
+  @include e(inner) {
+    border: var(--hc-border);
+    border-radius: var(--hc-border-radius-circle);
+    width: 14px;
+    height: 14px;
+    background-color: var(--hc-fill-color-blank);
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+
+    &::after {
+      width: 4px;
+      height: 4px;
+      border-radius: var(--hc-border-radius-circle);
+      background-color: var(--hc-color-white);
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.15s ease-in;
+    }
+  }
+
+  @include when(checked) {
+    .#{$namespace}-radio__inner {
+      border-color: var(--hc-color-primary);
+      background: var(--hc-color-primary);
+
+      &::after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  }
+
+  @include e(label) {
+    font-size: var(--hc-font-size-base);
+    padding-left: 8px;
+  }
+}
