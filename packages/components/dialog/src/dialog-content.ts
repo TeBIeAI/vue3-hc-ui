@@ -15,7 +15,8 @@ export const dialogContentProps = buildProps({
   title: {
     type: String,
     default: ''
-  }
+  },
+  draggable: Boolean
 } as const)
 
 export const dialogContentEmits = {

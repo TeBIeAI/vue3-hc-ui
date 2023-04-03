@@ -13,11 +13,12 @@ export const dialogProps = buildProps({
     type: Boolean,
     default: false
   },
+  closeOnClickModal: {
+    type: Boolean,
+    default: true
+  },
   beforeClose: {
     type: definePropType<DialogBeforeCloseFn>(Function)
-  },
-  width: {
-    type: [String, Number]
   },
   appendToBody: Boolean,
   openDelay: {
@@ -27,7 +28,9 @@ export const dialogProps = buildProps({
   closeDelay: {
     type: [Number],
     default: 0
-  }
+  },
+  zIndex: Number,
+  width: String
 } as const)
 
 export const dialogEmits = {

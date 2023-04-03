@@ -1,31 +1,37 @@
 <template>
-  <hc-dialog
-    v-model="dialogVisible"
-    title="Tips"
-    width="30%"
-    :before-close="handleClose"
-  >
-    <span>This is a message</span>
+  <hc-dialog v-model="outerVisible" draggable title="Outer Dialog">
+    <template #default>
+      <hc-dialog
+        v-model="innerVisible"
+        draggable
+        width="30%"
+        title="Inner Dialog"
+        append-to-body
+      />
+    </template>
     <template #footer>
-      <span class="dialog-footer">
-        <button @click="dialogVisible = false">Cancel</button>
-        <button type="primary" @click="dialogVisible = false">Confirm</button>
-      </span>
+      <div class="dialog-footer">
+        <el-button @click="outerVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="innerVisible = true">
+          open the inner Dialog
+        </el-button>
+      </div>
     </template>
   </hc-dialog>
 
   <div>
-    <button @click="handleClick">打开弹框</button>
+    <button @click="outerVisible = true">打开弹框</button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const dialogVisible = ref(false)
+const outerVisible = ref(false)
+const innerVisible = ref(false)
 
-const handleClick = () => {
-  dialogVisible.value = true
+const handleOpen = () => {
+  console.log('open')
 }
 
 const handleClose = (fn) => {

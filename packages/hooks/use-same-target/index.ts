@@ -1,7 +1,6 @@
 import { noop } from 'lodash-es'
 
 export const useSameTarget = (handleClick?: (e: MouseEvent) => void) => {
-  debugger
   if (!handleClick) {
     return { onClick: noop, onMousedown: noop, onMouseup: noop }
   }
@@ -18,11 +17,14 @@ export const useSameTarget = (handleClick?: (e: MouseEvent) => void) => {
 
   const onMousedown = (e: MouseEvent) => {
     // marking current mousedown target.
+    console.log(e.target, e.currentTarget)
     mousedownTarget = e.target === e.currentTarget
+    console.log(mousedownTarget)
   }
   const onMouseup = (e: MouseEvent) => {
     // marking current mouseup target.
     mouseupTarget = e.target === e.currentTarget
+    console.log(mouseupTarget)
   }
 
   return {

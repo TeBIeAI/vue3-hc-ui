@@ -1,14 +1,46 @@
-import { onMounted, ref, watch } from 'vue'
+import { UPDATE_MODEL_EVENT } from './../../../constants/event'
+import {
+  computed,
+  CSSProperties,
+  getCurrentInstance,
+  nextTick,
+  onMounted,
+  ref,
+  SetupContext,
+  watch
+} from 'vue'
 import type { Ref } from 'vue'
-import { DialogProps } from './dialog'
+import { DialogEmits, DialogProps } from './dialog'
+import { defaultNamespace, useZIndex } from '@hc-ui/hooks'
 
 export const useDialog = (
   props: DialogProps,
   dialogRef: Ref<HTMLElement | undefined>
 ) => {
+  const instance = getCurrentInstance()
+  const emit = instance?.emit as SetupContext<DialogEmits>['emit']
+
+  const namespace = defaultNamespace
+
+  const { nextZIndex } = useZIndex()
+
   const visible = ref(false)
   const closed = ref(false)
   const rendered = ref(false)
+  const zIndex = ref(props.zIndex || nextZIndex())
+
+  const afterEnter = () => {
+    emit('opened')
+  }
+
+  const afterLeave = () => {
+    emit('closed')
+    emit(UPDATE_MODEL_EVENT, false)
+  }
+
+  const beforeLeave = () => {
+    emit('close')
+  }
 
   const open = () => {
     doOpen()
@@ -26,6 +58,22 @@ export const useDialog = (
     visible.value = false
   }
 
+  const style = computed(() => {
+    const style: CSSProperties = {}
+    const varPrefix = `--${namespace}-dialog-width` as const
+
+    if (props.width) {
+      style[varPrefix] = props.width
+    }
+    return style
+  })
+
+  const onModalClick = () => {
+    if (props.closeOnClickModal) {
+      handleClose()
+    }
+  }
+
   function handleClose() {
     function hide() {
       visible.value = false
@@ -41,11 +89,13 @@ export const useDialog = (
   watch(
     () => props.modelValue,
     (val) => {
-      debugger
       if (val) {
         open()
         rendered.value = true
         closed.value = false
+        nextTick(() => {
+          emit('open')
+        })
       } else {
         if (visible.value) {
           close()
@@ -68,6 +118,12 @@ export const useDialog = (
     close,
     closed,
     rendered,
-    handleClose
+    handleClose,
+    zIndex,
+    afterEnter,
+    afterLeave,
+    beforeLeave,
+    onModalClick,
+    style
   }
 }

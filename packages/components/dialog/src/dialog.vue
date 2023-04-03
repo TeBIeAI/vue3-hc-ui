@@ -1,28 +1,37 @@
 <template>
   <Teleport to="body" :disabled="!appendToBody">
-    <div
-      v-show="visible"
-      role="dialog"
-      :class="`${ns.namespace}-overlay-dialog`"
-      @click="overlayEvent.onClick"
-      @mousedown="overlayEvent.onMousedown"
-      @mouseup="overlayEvent.onMouseup"
+    <transition
+      name="dialog-fade"
+      @after-enter="afterEnter"
+      @after-leave="afterLeave"
+      @before-leave="beforeLeave"
     >
-      <hc-dialog-content
-        :title="title"
-        :show-close="showClose"
-        @close="handleClose"
+      <div
+        v-show="visible"
+        role="dialog"
+        :class="`${ns.namespace}-overlay-dialog`"
+        :zIndex="zIndex"
+        @click="overlayEvent.onClick"
+        @mousedown="overlayEvent.onMousedown"
+        @mouseup="overlayEvent.onMouseup"
       >
-        <template #header>
-          <slot v-if="!$slots.title" name="header" />
-          <slot v-else name="title" />
-        </template>
-        <slot />
-        <template v-if="$slots.footer" #footer>
-          <slot name="footer" />
-        </template>
-      </hc-dialog-content>
-    </div>
+        <hc-dialog-content
+          :title="title"
+          :draggable="draggable"
+          :show-close="showClose"
+          @close="handleClose"
+        >
+          <template #header>
+            <slot v-if="!$slots.title" name="header" />
+            <slot v-else name="title" />
+          </template>
+          <slot />
+          <template v-if="$slots.footer" #footer>
+            <slot name="footer" />
+          </template>
+        </hc-dialog-content>
+      </div>
+    </transition>
   </Teleport>
 </template>
 
@@ -46,17 +55,23 @@ const ns = useNamespace('dialog')
 const dialogRef = ref<HTMLElement>()
 const headerRef = ref<HTMLElement>()
 
-const { visible, handleClose } = useDialog(props, dialogRef)
+const {
+  visible,
+  handleClose,
+  onModalClick,
+  zIndex,
+  afterEnter,
+  afterLeave,
+  beforeLeave,
+  style
+} = useDialog(props, dialogRef)
 
-const aaa = () => {
-  debugger
-}
-
-const overlayEvent = useSameTarget(handleClose)
+const overlayEvent = useSameTarget(onModalClick)
 
 provide(dialogInjectionKey, {
   ns,
   dialogRef,
-  headerRef
+  headerRef,
+  style
 })
 </script>
