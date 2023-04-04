@@ -1,0 +1,152 @@
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+@use './mixins/config.scss' as *;
+
+@include b(button) {
+  --hc-button-size: 24px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  height: 32px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--hc-button-text-color);
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.1s;
+  font-weight: var(--hc-font-weight-primary);
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background-color: var(--hc-button-bg-color);
+  border: var(--hc-border);
+  border-color: var(--hc-button-border-color);
+  padding: 8px 15px;
+  font-size: var(--hc-font-size-base);
+  border-radius: var(--hc-border-radius-base);
+
+  & + & {
+    margin-left: 12px;
+  }
+
+  & [class*='#{$namespace}-icon'] {
+    & + span {
+      margin-left: 6px;
+      color: var(--hc-button-text-color);
+    }
+  }
+
+  & > span {
+    display: inline-flex;
+    align-items: center;
+    color: var(--hc-button-text-color);
+  }
+
+  @include m(small) {
+    height: var(--hc-button-size);
+    padding: 5px 11px;
+    font-size: 12px;
+    border-radius: calc(var(--hc-border-radius-base) - 1px);
+  }
+
+  @include when(disabled) {
+    color: var(--hc-button-disabled-text-color);
+    cursor: not-allowed;
+    background-image: none;
+    background-color: var(--hc-button-disabled-bg-color);
+    border-color: var(--hc-button-disabled-border-color);
+  }
+
+  @include when(loading) {
+    position: relative;
+    pointer-events: none;
+
+    &:before {
+      // mask the button
+      z-index: 1;
+      pointer-events: none;
+      content: '';
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      border-radius: inherit;
+      background-color: var(--hc-mask-color-extra-light);
+    }
+  }
+
+  @include when(circle) {
+    border-radius: 50%;
+    width: var(--hc-button-size);
+    padding: 5px;
+  }
+
+  @include m(success) {
+    --hc-button-text-color: var(--hc-color-white);
+    --hc-button-bg-color: var(--hc-color-success);
+    --hc-button-border-color: var(--hc-color-success);
+    --hc-button-outline-color: var(--hc-color-success-light-5);
+    --hc-button-active-color: var(--hc-color-success-dark-2);
+    --hc-button-hover-text-color: var(--hc-color-white);
+    --hc-button-hover-link-text-color: var(--hc-color-success-light-5);
+    --hc-button-hover-bg-color: var(--hc-color-success-light-3);
+    --hc-button-hover-border-color: var(--hc-color-success-light-3);
+    --hc-button-active-bg-color: var(--hc-color-success-dark-2);
+    --hc-button-active-border-color: var(--hc-color-success-dark-2);
+    --hc-button-disabled-text-color: var(--hc-color-white);
+    --hc-button-disabled-bg-color: var(--hc-color-success-light-5);
+    --hc-button-disabled-border-color: var(--hc-color-success-light-5);
+  }
+  @include m(primary) {
+    --hc-button-text-color: var(--hc-color-white);
+    --hc-button-bg-color: var(--hc-color-primary);
+    --hc-button-border-color: var(--hc-color-primary);
+    --hc-button-outline-color: var(--hc-color-primary-light-5);
+    --hc-button-active-color: var(--hc-color-primary-dark-2);
+    --hc-button-hover-text-color: var(--hc-color-white);
+    --hc-button-hover-link-text-color: var(--hc-color-primary-light-5);
+    --hc-button-hover-bg-color: var(--hc-color-primary-light-3);
+    --hc-button-hover-border-color: var(--hc-color-primary-light-3);
+    --hc-button-active-bg-color: var(--hc-color-primary-dark-2);
+    --hc-button-active-border-color: var(--hc-color-primary-dark-2);
+    --hc-button-disabled-text-color: var(--hc-color-white);
+    --hc-button-disabled-bg-color: var(--hc-color-primary-light-5);
+    --hc-button-disabled-border-color: var(--hc-color-primary-light-5);
+  }
+  @include m(warning) {
+    --hc-button-text-color: var(--hc-color-white);
+    --hc-button-bg-color: var(--hc-color-warning);
+    --hc-button-border-color: var(--hc-color-warning);
+    --hc-button-outline-color: var(--hc-color-warning-light-5);
+    --hc-button-active-color: var(--hc-color-warning-dark-2);
+    --hc-button-hover-text-color: var(--hc-color-white);
+    --hc-button-hover-link-text-color: var(--hc-color-warning-light-5);
+    --hc-button-hover-bg-color: var(--hc-color-warning-light-3);
+    --hc-button-hover-border-color: var(--hc-color-warning-light-3);
+    --hc-button-active-bg-color: var(--hc-color-warning-dark-2);
+    --hc-button-active-border-color: var(--hc-color-warning-dark-2);
+    --hc-button-disabled-text-color: var(--hc-color-white);
+    --hc-button-disabled-bg-color: var(--hc-color-warning-light-5);
+    --hc-button-disabled-border-color: var(--hc-color-warning-light-5);
+  }
+  @include m(danger) {
+    --hc-button-text-color: var(--hc-color-white);
+    --hc-button-bg-color: var(--hc-color-danger);
+    --hc-button-border-color: var(--hc-color-danger);
+    --hc-button-outline-color: var(--hc-color-danger-light-5);
+    --hc-button-active-color: var(--hc-color-danger-dark-2);
+    --hc-button-hover-text-color: var(--hc-color-white);
+    --hc-button-hover-link-text-color: var(--hc-color-danger-light-5);
+    --hc-button-hover-bg-color: var(--hc-color-danger-light-3);
+    --hc-button-hover-border-color: var(--hc-color-danger-light-3);
+    --hc-button-active-bg-color: var(--hc-color-danger-dark-2);
+    --hc-button-active-border-color: var(--hc-color-danger-dark-2);
+    --hc-button-disabled-text-color: var(--hc-color-white);
+    --hc-button-disabled-bg-color: var(--hc-color-danger-light-5);
+    --hc-button-disabled-border-color: var(--hc-color-danger-light-5);
+  }
+}

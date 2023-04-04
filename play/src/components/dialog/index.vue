@@ -6,7 +6,6 @@
         draggable
         width="30%"
         title="Inner Dialog"
-        append-to-body
       />
     </template>
     <template #footer>
@@ -34,7 +33,7 @@ const handleOpen = () => {
   console.log('open')
 }
 
-const handleClose = (fn) => {
+const handleClose = (fn: any) => {
   fn()
   // dialogVisible.value = false
 }
