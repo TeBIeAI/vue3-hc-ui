@@ -1,27 +1,25 @@
 <template>
-  <span :class="compCls">
+  <component :is="!hasOwnLabel ? 'span' : 'label'" :class="compCls">
     <span :class="spanCls">
       <input
         v-model="model"
-        :class="ns.e('origin')"
         type="checkbox"
         :value="label"
-        @change="handleClick"
+        :class="ns.e('origin')"
+        @change="handleChange"
       />
       <span :class="ns.e('inner')"></span>
     </span>
-    <span :class="ns.e('label')">
+    <span v-if="hasOwnLabel" :class="ns.e('label')">
       <slot />
-      <template v-if="$slots.default || label">
-        {{ label }}
-      </template>
+      <template v-if="!$slots.default">{{ label }}</template>
     </span>
-  </span>
+  </component>
 </template>
 
 <script lang="ts" setup>
 import { useNamespace } from '@hc-ui/hooks'
-import { computed, unref, useSlots } from 'vue'
+import { computed, useSlots } from 'vue'
 import { checkboxEmits, checkboxProps } from './checkbox'
 import { useCheckbox } from './composables/use-checkbox'
 
@@ -31,26 +29,24 @@ defineOptions({
 
 const props = defineProps(checkboxProps)
 const emit = defineEmits(checkboxEmits)
-
 const slots = useSlots()
-
-const { isChecked, isDisabeld, model, handleClick } = useCheckbox(props, slots)
 
 const ns = useNamespace('checkbox')
 
-const compCls = computed(() => {
-  return [
-    ns.b(),
-    ns.is('disabled', unref(isDisabeld.value)),
-    ns.is('checked', isChecked.value)
-  ]
-})
+const { hasOwnLabel, isDisabled, isChecked, model, handleChange } = useCheckbox(
+  props,
+  slots
+)
 
-const spanCls = computed(() => {
-  return [
-    ns.e('input'),
-    ns.is('disabled', unref(isDisabeld.value)),
-    ns.is('checked', isChecked.value)
-  ]
-})
+const compCls = computed(() => [
+  ns.b(),
+  ns.is('disabled', isDisabled.value),
+  ns.is('checked', isChecked.value)
+])
+
+const spanCls = computed(() => [
+  ns.e('input'),
+  ns.is('disabled', isDisabled.value),
+  ns.is('checked', isChecked.value)
+])
 </script>

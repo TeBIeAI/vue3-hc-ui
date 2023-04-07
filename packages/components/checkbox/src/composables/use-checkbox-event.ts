@@ -1,19 +1,25 @@
 import { getCurrentInstance } from 'vue'
 import { CheckboxProps } from '../checkbox'
+import type { CheckboxReturn } from './use-checkbox-model'
 
-export const useCheckboxEvent = (props: CheckboxProps) => {
+export const useCheckboxEvent = (
+  props: CheckboxProps
+  // { model }: CheckboxReturn['model']
+) => {
   const { emit } = getCurrentInstance()!
 
-  function getLabeledVaue(value: string | number | boolean) {
-    return value === true
+  const getLabeledValue = (value: string | number | boolean) => {
+    return value === props.trueLabel || value === true
+      ? props.trueLabel ?? true
+      : props.falseLabel ?? false
   }
 
-  const handleClick = (e: Event) => {
+  const handleChange = (e: Event) => {
     const target = e.target as HTMLInputElement
-    emit('change', true, e)
+    emit('change', getLabeledValue(target.checked))
   }
 
   return {
-    handleClick
+    handleChange
   }
 }

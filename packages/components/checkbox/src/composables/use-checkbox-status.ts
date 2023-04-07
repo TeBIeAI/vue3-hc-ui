@@ -1,38 +1,36 @@
-import { isArray, isEqual, isObject } from 'lodash-es'
-import { isBoolean } from '@vueuse/core'
-import { ComponentInternalInstance, computed, ref, toRaw } from 'vue'
+import { computed, toRaw } from 'vue'
+import type { ComponentInternalInstance } from 'vue'
 import { CheckboxProps } from '../checkbox'
-import { CheckboxModel } from './use-checkbox-model'
+import { CheckboxReturn } from './use-checkbox-model'
+import { isArray, isBoolean, isObject } from 'lodash-es'
 
 export const useCheckboxStatus = (
   props: CheckboxProps,
   slots: ComponentInternalInstance['slots'],
-  { model }: Pick<CheckboxModel, 'model'>
+  model: CheckboxReturn['model']
 ) => {
-  const isFocus = ref<boolean>(false)
+  const hasOwnLabel = computed(() => !!(slots.default || props.label))
 
-  const isChecked = computed(() => {
+  const isChecked = computed<boolean>(() => {
     const value = model.value
+
     if (isBoolean(value)) {
       return value
     } else if (isArray(value)) {
       if (isObject(props.label)) {
-        return value.map(toRaw).some((o) => isEqual(o, props.label))
+        return false
       } else {
         return value.map(toRaw).includes(props.label)
       }
+    } else if (value !== null && value !== undefined) {
+      return value === props.trueLabel
     } else {
       return !!value
     }
   })
 
-  const hasOwnLabel = computed(() => !!(slots.default || props.label))
-
   return {
     hasOwnLabel,
-    isChecked,
-    isFocus
+    isChecked
   }
 }
-
-export type CheckboxStatus = ReturnType<typeof useCheckboxStatus>

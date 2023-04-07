@@ -9,7 +9,8 @@ import {
   HcRadioGroup,
   HcDialog,
   HcCheckbox,
-  HcCheckboxGroup
+  HcCheckboxGroup,
+  HcTransfer
 } from '@hc-ui/components'
 
 const app = createApp(App)
@@ -21,5 +22,6 @@ app.use(HcRadioGroup)
 app.use(HcDialog)
 app.use(HcCheckbox)
 app.use(HcCheckboxGroup)
+app.use(HcTransfer)
 
 app.mount('#app')

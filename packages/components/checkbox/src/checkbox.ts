@@ -15,7 +15,15 @@ export const checkboxProps = buildProps({
   },
   disabled: Boolean,
   checked: Boolean,
-  name: String
+  name: String,
+  trueLabel: {
+    type: [String, Number],
+    default: undefined
+  },
+  falseLabel: {
+    type: [String, Number],
+    default: undefined
+  }
 } as const)
 
 export const checkboxEmits = {

@@ -8,6 +8,7 @@ declare module 'vue' {
     HcButton: typeof import('../packages/components')['HcButton']
     HcCheckbox: typeof import('../packages/components')['HcCheckbox']
     HcCheckboxGroup: typeof import('../packages/components')['HcCheckboxGroup']
+    HcTransfer: typeof import('../packages/components')['HcTransfer']
   }
 }
 
