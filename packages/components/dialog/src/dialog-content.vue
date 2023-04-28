@@ -43,6 +43,5 @@ const props = defineProps(dialogContentProps)
 defineEmits(dialogContentEmits)
 
 const draggable = computed(() => props.draggable)
-debugger
 useDraggable(dialogRef, headerRef, draggable)
 </script>

@@ -34,6 +34,8 @@ module.exports = {
     'no-debugger': 1,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
-    '@typescript-eslint/no-empty-function': 1
+    '@typescript-eslint/no-empty-function': 1,
+    '@typescript-eslint/ban-ts-comment': 0,
+    'no-empty': 0
   }
 }

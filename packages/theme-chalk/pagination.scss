@@ -1,0 +1,100 @@
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+@use './mixins/config.scss' as *;
+
+@mixin pagination-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  height: 32px;
+  line-height: 32px;
+  background-color: var(--hc-fill-color-blank);
+  color: var(--hc-text-color-primary);
+  font-size: 14px;
+  border-radius: 2px;
+
+  * {
+    pointer-events: none;
+  }
+
+  &:disabled,
+  &.is-disabled {
+    color: var(--hc-text-color-placeholder);
+    cursor: not-allowed;
+    background-color: var(--hc-fill-color-blank);
+  }
+
+  &.is-active {
+    color: red;
+  }
+}
+
+@include b(pagination) {
+  white-space: nowrap;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+
+  .#{$namespace}-input__inner {
+    text-align: center;
+  }
+
+  button {
+    @include pagination-button;
+  }
+
+  .btn-prev,
+  .btn-next {
+    .#{$namespace}-icon {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      width: inherit;
+    }
+  }
+
+  @include e(jumper) {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    font-weight: normal;
+  }
+
+  @include e(goto) {
+    margin-right: 8px;
+  }
+
+  @include e(editor) {
+    text-align: center;
+    box-sizing: border-box;
+
+    &.#{$namespace}-input {
+      width: 56px;
+    }
+
+    .#{$namespace}-input__inner::-webkit-inner-spin-button,
+    .#{$namespace}-input__inner::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+@include b(pager) {
+  user-select: none;
+  list-style: none;
+  font-size: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+
+  li {
+    @include pagination-button;
+  }
+}

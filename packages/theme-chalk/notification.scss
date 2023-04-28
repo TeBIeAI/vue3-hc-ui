@@ -1,0 +1,52 @@
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+@use './mixins/config.scss' as *;
+
+@include b(notification) {
+  --hc-notification-width: 330px;
+  --hc-notification-padding: 14px 26px 14px 13px;
+  --hc-notification-radius: 8px;
+  --hc-notification-border-color: var(--hc-border-color-lighter);
+  --hc-notification-shadow: var(--hc-box-shadow-light);
+
+  display: flex;
+  width: var(--hc-notification-width);
+  padding: var(--hc-notification-padding);
+  border-radius: var(--hc-notification-radius);
+  box-sizing: border-box;
+  border: 1px solid var(--hc-notification-border-color);
+  position: fixed;
+  background-color: var(--hc-bg-color-overlay);
+  box-shadow: var(--hc-notification-shadow);
+  transition: opacity var(--hc-transition-duration),
+    transform var(--hc-transition-duration), left var(--hc-transition-duration),
+    right var(--hc-transition-duration), top 0.4s,
+    bottom var(--hc-transition-duration);
+  overflow-wrap: anywhere;
+  overflow: hidden;
+  z-index: 9999;
+
+  &.right {
+    right: 16px;
+  }
+
+  &.left {
+    left: 16px;
+  }
+}
+
+.#{$namespace}-notification-fade-enter-from {
+  &.right {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  &.left {
+    left: 0;
+    transform: translateX(-100%);
+  }
+}
+
+.#{$namespace}-notification-fade-leave-to {
+  opacity: 0;
+}

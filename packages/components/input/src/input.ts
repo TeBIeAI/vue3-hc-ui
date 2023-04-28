@@ -6,11 +6,15 @@ import type { Component, ExtractPropTypes } from 'vue'
 export const inputProps = buildProps({
   type: {
     type: String,
-    values: ['text', 'textarea'],
+    values: ['text', 'textarea', 'number'],
     default: 'text'
   },
   modelValue: {
-    type: String,
+    type: definePropType<string | number | undefined | null>([
+      Object,
+      String,
+      Number
+    ]),
     default: ''
   },
   disabled: Boolean,

@@ -11,7 +11,7 @@ import { ref } from 'vue'
 
 const radio = ref('option2')
 
-const handleChange = (val) => {
+const handleChange = (val: any) => {
   radio.value
 }
 </script>

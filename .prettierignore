@@ -1,0 +1,6 @@
+dist/*
+node_modules/*
+public/*
+coverage
+*.md
+pnpm-lock.yaml

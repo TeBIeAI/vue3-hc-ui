@@ -1,0 +1,44 @@
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+@use './mixins/config.scss' as *;
+
+:root {
+  --hc-loading-spinner-size: 42px;
+  --hc-loading-fullscreen-spinner-size: 50px;
+}
+
+@include b(loading-parent) {
+  @include m(relative) {
+    position: relative !important;
+  }
+}
+
+@include b(loading-mask) {
+  position: absolute;
+  z-index: 2000;
+  background-color: var(--hc-mask-color);
+  margin: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: opacity var(--hc-transition-duration);
+
+  @include when(fullscreen) {
+    position: fixed;
+  }
+}
+
+@include b(loading-spinner) {
+  top: 50%;
+  margin-top: calc((0px - var(--hc-loading-spinner-size)) / 2);
+  width: 100%;
+  text-align: center;
+  position: absolute;
+
+  .#{$namespace}-loading-text {
+    color: var(--hc-color-primary);
+    margin: 3px 0;
+    font-size: 14px;
+  }
+}

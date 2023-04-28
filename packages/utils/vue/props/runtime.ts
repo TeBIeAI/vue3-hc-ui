@@ -41,12 +41,26 @@ export const buildProp = <
 
           if (values) {
             allowedValues = Array.from(values)
-            if (hasOwn(prop, 'default' as never)) {
+            if (hasOwn(prop, 'default')) {
               allowedValues.push(defaultValue)
             }
             valid ||= allowedValues.includes(val)
           }
+          if (validator) valid ||= validator(val)
 
+          if (!valid && allowedValues.length > 0) {
+            const allowValuesText = [...new Set(allowedValues)]
+              .map((value) => JSON.stringify(value))
+              .join(', ')
+
+            console.warn(
+              `Invalid prop: validation failed${
+                key ? ` for prop "${key}"` : ''
+              }. Expected one of [${allowValuesText}], got value ${JSON.stringify(
+                val
+              )}.`
+            )
+          }
           return valid
         }
       : undefined

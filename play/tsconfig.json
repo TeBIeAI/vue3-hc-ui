@@ -1,7 +1,10 @@
 {
+  // "references": [
+  //   { "path": "../tsconfig.json" },
+  //   { "path": "./tsconfig.node.json" }
+  // ],
   "compilerOptions": {
     "target": "ESNext",
-    "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
@@ -17,12 +20,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "src/**/*.tsx",
     "src/**/*.vue",
     "../typings/components.d.ts"
-  ],
-  "references": [
-    { "path": "../tsconfig.json" },
-    { "path": "./tsconfig.node.json" }
   ]
 }

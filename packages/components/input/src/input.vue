@@ -57,7 +57,7 @@
             <component :is="IconPwd" />
           </hc-icon>
           <template v-if="isWordLimitVisible">
-            {{ textLenth }}/{{ $attrs.maxlength }}
+            {{ textLength }}/{{ $attrs.maxlength }}
           </template>
         </span>
       </span>
@@ -142,7 +142,7 @@ const isWordLimitVisible = computed(
 )
 
 const IconPwd = computed(() => (passwordVisible.value ? Hide : View))
-const textLenth = computed(() => nativeInputValue.value.length)
+const textLength = computed(() => nativeInputValue.value.length)
 
 const setNativeInputValue = () => {
   const input = _ref.value
